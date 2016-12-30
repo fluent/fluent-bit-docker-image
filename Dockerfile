@@ -8,13 +8,11 @@ LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version
 RUN apk --no-cache --update add \
                             build-base \
                             ca-certificates \
-                            zlib-dev \
                             cmake && \
-    wget -O /tmp/fluent-bit-0.9.1.tar.gz http://fluentbit.io/releases/0.9/fluent-bit-0.9.1.tar.gz && \
-    cd /tmp && tar zxfv fluent-bit-0.9.1.tar.gz && cd fluent-bit-0.9.1/build/ && \
-    cmake -DFLB_DEBUG=On -DFLB_TRACE=On ../ && \
+    wget -O /tmp/fluent-bit-0.10.0.tar.gz http://fluentbit.io/releases/0.10/fluent-bit-0.10.0.tar.gz && \
+    cd /tmp && tar zxfv fluent-bit-0.10.0.tar.gz && cd fluent-bit-0.10.0/build/ && \
+    cmake -DFLB_DEBUG=On -DFLB_TRACE=On -DFLB_JEMALLOC=On ../ && \
     make && make install && \
-    apk del zlib-dev && \
     rm -rf /tmp/*
 
 RUN adduser -D -g '' -u 1000 -h /home/fluent fluent
