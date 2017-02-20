@@ -28,5 +28,6 @@ RUN apk --no-cache --update add \
 
 RUN mkdir -p /fluent-bit/log
 COPY fluent-bit.conf /fluent-bit/etc/
+COPY parsers.conf /fluent-bit/etc/
 
 CMD ["/fluent-bit/bin/fluent-bit", "-c", "/fluent-bit/etc/fluent-bit.conf"]
