@@ -23,7 +23,8 @@ RUN apk --no-cache --update add \
     cmake -DFLB_DEBUG=On -DFLB_TRACE=On ../ \
       -DCMAKE_INSTALL_PREFIX=/fluent-bit/ && \
     make && make install && \
-    rm -rf /tmp/* && apk del build-base openssl
+    rm -rf /tmp/* /fluent-bit/include /fluent-bit/lib* && \
+    apk del build-base openssl
 
 RUN mkdir -p /fluent-bit/log
 COPY fluent-bit.conf /fluent-bit/etc/
