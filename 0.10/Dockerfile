@@ -1,6 +1,6 @@
-FROM alpine:3.4
-MAINTAINER Eduardo Silva <eduardo@treasure-data.com>
+FROM alpine:3.5
 LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version="1.1"
+      Maintainer="Eduardo Silva <eduardo@treasure-data.com>"
 
 # Fluent Bit version
 ENV FLB_MAJOR 0
