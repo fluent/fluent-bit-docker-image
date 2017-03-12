@@ -1,6 +1,6 @@
-FROM alpine:3.4
-MAINTAINER Eduardo Silva <eduardo@treasure-data.com>
+FROM alpine:3.5
 LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version="1.1"
+      Maintainer="Eduardo Silva <eduardo@treasure-data.com>"
 
 # Fluent Bit version
 ENV FLB_MAJOR 0
@@ -14,7 +14,7 @@ ENV FLB_VERSION 0.11.0
 RUN apk --no-cache --update add \
                             build-base \
                             ca-certificates \
-                            openssl \
+                            libressl \
                             cmake && \
     wget -O "/tmp/fluent-bit-$FLB_VERSION-dev.zip" "http://github.com/fluent/fluent-bit/archive/master.zip" && \
     cd /tmp && \
@@ -24,7 +24,7 @@ RUN apk --no-cache --update add \
       -DCMAKE_INSTALL_PREFIX=/fluent-bit/ && \
     make && make install && \
     rm -rf /tmp/* /fluent-bit/include /fluent-bit/lib* && \
-    apk del build-base openssl
+    apk del build-base libressl
 
 RUN mkdir -p /fluent-bit/log
 COPY fluent-bit.conf /fluent-bit/etc/
