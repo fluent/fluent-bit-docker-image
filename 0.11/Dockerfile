@@ -16,10 +16,10 @@ RUN apk --no-cache --update add \
                             ca-certificates \
                             openssl \
                             cmake && \
-    wget -O "/tmp/fluent-bit-$FLB_VERSION-dev.zip" "http://github.com/fluent/fluent-bit/archive/master.zip" && \
+    wget -O "/tmp/fluent-bit-$FLB_VERSION.zip" "http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip" && \
     cd /tmp && \
-    unzip "fluent-bit-$FLB_VERSION-dev.zip" && \
-    cd "fluent-bit-master/build/" && \
+    unzip "fluent-bit-$FLB_VERSION.zip" && \
+    cd "fluent-bit-$FLB_VERSION/build/" && \
     cmake -DFLB_DEBUG=On -DFLB_TRACE=On ../ \
       -DCMAKE_INSTALL_PREFIX=/fluent-bit/ && \
     make && make install && \
