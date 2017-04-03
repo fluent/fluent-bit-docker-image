@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM gcr.io/google-containers/debian-base-amd64:0.1
 MAINTAINER Eduardo Silva <eduardo@treasure-data.com>
 LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version="1.1"
 
@@ -8,26 +8,37 @@ ENV FLB_MINOR 11
 ENV FLB_PATCH 0
 ENV FLB_VERSION 0.11.0
 
-# Do not split this into multiple RUN!
-# Docker creates a layer for every RUN-Statement
-# therefore an 'apk delete build*' has no effect
-RUN apk --no-cache --update add \
-                            build-base \
-                            ca-certificates \
-                            openssl \
-                            cmake && \
-    wget -O "/tmp/fluent-bit-$FLB_VERSION.zip" "http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip" && \
-    cd /tmp && \
-    unzip "fluent-bit-$FLB_VERSION.zip" && \
-    cd "fluent-bit-$FLB_VERSION/build/" && \
-    cmake -DFLB_DEBUG=On -DFLB_TRACE=On ../ \
-      -DCMAKE_INSTALL_PREFIX=/fluent-bit/ && \
-    make && make install && \
-    rm -rf /tmp/* /fluent-bit/include /fluent-bit/lib* && \
-    apk del build-base openssl
+ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip
 
-RUN mkdir -p /fluent-bit/log
+RUN mkdir -p /fluent-bit/bin /fluent-bit/etc
+
+RUN apt-get -qq update \
+    && apt-get install -y -qq \
+       ca-certificates \
+       build-essential \
+       cmake \
+       make \
+       sudo \
+       wget \
+       unzip \
+    && apt-get install -y -qq --reinstall lsb-base lsb-release \
+    && wget -O "/tmp/fluent-bit-${FLB_VERSION}.zip" ${FLB_TARBALL} \
+    && cd /tmp && unzip "fluent-bit-$FLB_VERSION.zip" \
+    && cd "fluent-bit-$FLB_VERSION"/build/ \
+    && cmake -DFLB_DEBUG=On -DFLB_TRACE=On -DFLB_JEMALLOC=On -DFLB_BUFFERING=On ../ \
+    && make \
+    && install bin/fluent-bit /fluent-bit/bin/ \
+    && apt-get remove --purge --auto-remove -y -qq \
+       build-essential \
+       cmake \
+       make \
+       wget \
+       unzip \
+    && rm -rf /tmp/*
+
+# Configuration files
 COPY fluent-bit.conf /fluent-bit/etc/
 COPY parsers.conf /fluent-bit/etc/
 
+# Entry point
 CMD ["/fluent-bit/bin/fluent-bit", "-c", "/fluent-bit/etc/fluent-bit.conf"]
