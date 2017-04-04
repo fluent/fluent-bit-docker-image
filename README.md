@@ -1,13 +1,13 @@
 # Fluent Bit Docker Image
 
-[Fluent Bit](http://fluentbit.io) Docker image based on Alpine Linux.
+[Fluent Bit](http://fluentbit.io) Docker image based on Debian base image from Google.
 
 ## 1. Build image
 
 Use `docker build` command to build the image. This example names the image "fluent-bit:latest":
 
 ```
-docker build -t fluent-bit:latest ./
+docker build -t fluent-bit:0.11 ./
 ```
 
 ## 2. Test it
@@ -15,7 +15,7 @@ docker build -t fluent-bit:latest ./
 Once the image is built, it's ready to run:
 
 ```
-docker -p 127.0.0.0.1:24224:24224 run custom-fluent-bit:latest
+docker -p 127.0.0.0.1:24224:24224 run fluent-bit:latest
 ```
 
 By default, the configuration set a listener on TCP port 24224 through Forward protocol and prints to the standard output interface each message. So this can be used to forward Docker log messages from one container to the Fluent Bit image, e.g:
@@ -28,7 +28,7 @@ $ docker run --log-driver=fluentd -t ubuntu echo "Testing a log message"
 On Fluent Bit container will print to stdout something like this:
 
 ```
-Fluent-Bit v0.10.1
+Fluent-Bit v0.11.1
 Copyright (C) Treasure Data
 
 [0] docker.31c94ceb86ca: [1487548735, {"container_id"=>"31c94ceb86cae7055564eb4d65cd2e2897addd252fe6b86cd11bddd70a871c08", "container_name"=>"/admiring_shannon", "source"=>"stdout","}]og"=>"Testing a log message
