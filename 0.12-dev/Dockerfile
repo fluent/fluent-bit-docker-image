@@ -4,11 +4,11 @@ LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version
 
 # Fluent Bit version
 ENV FLB_MAJOR 0
-ENV FLB_MINOR 11
+ENV FLB_MINOR 12
 ENV FLB_PATCH 0
-ENV FLB_VERSION 0.11
+ENV FLB_VERSION 0.12.0
 
-ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/0.11.zip
+ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/master.zip
 
 RUN mkdir -p /fluent-bit/bin /fluent-bit/etc
 
@@ -22,9 +22,9 @@ RUN apt-get -qq update \
        wget \
        unzip \
     && apt-get install -y -qq --reinstall lsb-base lsb-release \
-    && wget -O "/tmp/fluent-bit-${FLB_VERSION}.zip" ${FLB_TARBALL} \
-    && cd /tmp && unzip "fluent-bit-$FLB_VERSION.zip" \
-    && cd "fluent-bit-$FLB_VERSION"/build/ \
+    && wget -O "/tmp/fluent-bit-master.zip" ${FLB_TARBALL} \
+    && cd /tmp && unzip "fluent-bit-master.zip" \
+    && cd "fluent-bit-master"/build/ \
     && cmake -DFLB_DEBUG=On -DFLB_TRACE=On -DFLB_JEMALLOC=On -DFLB_BUFFERING=On ../ \
     && make \
     && install bin/fluent-bit /fluent-bit/bin/ \
