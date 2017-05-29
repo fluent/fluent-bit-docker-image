@@ -39,6 +39,7 @@ RUN apt-get -qq update \
 # Configuration files
 COPY fluent-bit.conf /fluent-bit/etc/
 COPY parsers.conf /fluent-bit/etc/
+COPY parsers_java.conf /fluent-bit/etc/
 
 # Entry point
 CMD ["/fluent-bit/bin/fluent-bit", "-c", "/fluent-bit/etc/fluent-bit.conf"]
