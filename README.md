@@ -15,7 +15,7 @@ docker build -t fluent-bit:0.11 ./
 Once the image is built, it's ready to run:
 
 ```
-docker -p 127.0.0.0.1:24224:24224 run fluent-bit:latest
+docker run -p 127.0.0.1:24224:24224 fluent-bit:latest
 ```
 
 By default, the configuration set a listener on TCP port 24224 through Forward protocol and prints to the standard output interface each message. So this can be used to forward Docker log messages from one container to the Fluent Bit image, e.g:
