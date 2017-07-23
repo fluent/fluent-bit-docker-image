@@ -10,7 +10,7 @@ ENV FLB_VERSION 0.11.15
 
 ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip
 
-RUN mkdir -p /fluent-bit/bin /fluent-bit/etc
+RUN mkdir -p /fluent-bit/bin /fluent-bit/etc /fluent-bit/log
 
 RUN apt-get -qq update \
     && apt-get install -y -qq \
