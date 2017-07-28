@@ -21,6 +21,7 @@ RUN apt-get -qq update \
        sudo \
        wget \
        unzip \
+       libsystemd-dev \
     && apt-get install -y -qq --reinstall lsb-base lsb-release \
     && wget -O "/tmp/fluent-bit-master.zip" ${FLB_TARBALL} \
     && cd /tmp && unzip "fluent-bit-master.zip" \
@@ -34,6 +35,7 @@ RUN apt-get -qq update \
        make \
        wget \
        unzip \
+       libsystemd-dev \
     && rm -rf /tmp/*
 
 # Configuration files
