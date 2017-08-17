@@ -8,7 +8,7 @@ ENV FLB_MINOR 12
 ENV FLB_PATCH 0
 ENV FLB_VERSION 0.12.0
 
-ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/master.zip
+ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip
 
 RUN mkdir -p /fluent-bit/bin /fluent-bit/etc /fluent-bit/log
 
@@ -23,9 +23,9 @@ RUN apt-get -qq update \
        unzip \
        libsystemd-dev \
     && apt-get install -y -qq --reinstall lsb-base lsb-release \
-    && wget -O "/tmp/fluent-bit-master.zip" ${FLB_TARBALL} \
-    && cd /tmp && unzip "fluent-bit-master.zip" \
-    && cd "fluent-bit-master"/build/ \
+    && wget -O "/tmp/fluent-bit-${FLB_VERSION}.zip" ${FLB_TARBALL} \
+    && cd /tmp && unzip "fluent-bit-$FLB_VERSION.zip" \
+    && cd "fluent-bit-$FLB_VERSION"/build/ \
     && cmake -DFLB_DEBUG=On -DFLB_TRACE=On -DFLB_JEMALLOC=On -DFLB_BUFFERING=On ../ \
     && make \
     && install bin/fluent-bit /fluent-bit/bin/ \
