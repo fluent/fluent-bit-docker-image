@@ -5,8 +5,8 @@ LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version
 # Fluent Bit version
 ENV FLB_MAJOR 0
 ENV FLB_MINOR 12
-ENV FLB_PATCH 5
-ENV FLB_VERSION 0.12.5
+ENV FLB_PATCH 6
+ENV FLB_VERSION 0.12.6
 
 ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip
 
