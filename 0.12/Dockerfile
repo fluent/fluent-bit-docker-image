@@ -14,7 +14,6 @@ RUN mkdir -p /fluent-bit/bin /fluent-bit/etc /fluent-bit/log
 
 RUN apt-get -qq update \
     && apt-get install -y -qq \
-       ca-certificates \
        build-essential \
        cmake \
        make \
@@ -37,6 +36,7 @@ RUN apt-get -qq update \
        bzip2 \
        openssl \
        manpages \
+    && apt-get install -y -qq --no-install-recommends ca-certificates \
     && rm -rf /tmp/*
 
 # Configuration files
