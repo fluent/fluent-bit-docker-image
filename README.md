@@ -2,15 +2,27 @@
 
 [Fluent Bit](http://fluentbit.io) Docker image based on Debian base image from Google.
 
-## 1. Build image
+
+
+## 1. Checkout Branch
+
+Fluent Bit Dockerfiles are located in separated branches with proper tags:
+
+| Branch | Tags Available                                               |
+| ------ | ------------------------------------------------------------ |
+| 0.13   | 0.13, 0.13.0                                                 |
+| 0.12   | 0.12, 0.12.19, 0.12.18, 0.12.17, 0.12.16, 0.12.15, 0.12.14, 0.12.13, 0.12.12, 0.12.11, 0.12.10, 0.12.9, 0.12.8, 0.12.7, 0.12.6, 0.12.5, 0.12.4, 0.12.3, 0.12.2, 0.12.1, 0.12.0 |
+
+## 2. Build image
 
 Use `docker build` command to build the image. This example names the image "fluent-bit:latest":
 
 ```
-docker build -t fluent-bit:0.11 ./
+$ cd 0.13/
+$ docker build -t fluent/fluent-bit:0.13 ./
 ```
 
-## 2. Test it
+## 3. Test it
 
 Once the image is built, it's ready to run:
 
@@ -28,7 +40,7 @@ $ docker run --log-driver=fluentd -t ubuntu echo "Testing a log message"
 On Fluent Bit container will print to stdout something like this:
 
 ```
-Fluent-Bit v0.11.1
+Fluent-Bit v0.13.0
 Copyright (C) Treasure Data
 
 [0] docker.31c94ceb86ca: [1487548735, {"container_id"=>"31c94ceb86cae7055564eb4d65cd2e2897addd252fe6b86cd11bddd70a871c08", "container_name"=>"/admiring_shannon", "source"=>"stdout","}]og"=>"Testing a log message
