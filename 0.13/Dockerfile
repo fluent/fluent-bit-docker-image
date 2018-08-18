@@ -1,10 +1,10 @@
-FROM gcr.io/google-containers/debian-base-amd64:0.3 as builder
+FROM gcr.io/google-containers/debian-base-amd64:0.3.1 as builder
 
 # Fluent Bit version
 ENV FLB_MAJOR 0
 ENV FLB_MINOR 13
-ENV FLB_PATCH 7
-ENV FLB_VERSION 0.13.7
+ENV FLB_PATCH 8
+ENV FLB_VERSION 0.13.8
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -47,7 +47,7 @@ COPY fluent-bit.conf \
      parsers_cinder.conf \
      /fluent-bit/etc/
 
-FROM gcr.io/google-containers/debian-base-amd64:0.3
+FROM gcr.io/google-containers/debian-base-amd64:0.3.1
 MAINTAINER Eduardo Silva <eduardo@treasure-data.com>
 LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version="1.1"
 
