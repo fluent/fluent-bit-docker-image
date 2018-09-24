@@ -3,8 +3,8 @@ FROM gcr.io/google-containers/debian-base-amd64:0.3.1 as builder
 # Fluent Bit version
 ENV FLB_MAJOR 0
 ENV FLB_MINOR 14
-ENV FLB_PATCH 2
-ENV FLB_VERSION 0.14.2
+ENV FLB_PATCH 3
+ENV FLB_VERSION 0.14.3
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -23,6 +23,7 @@ RUN apt-get update \
        libsystemd-dev \
        libssl1.0-dev \
        libasl-dev \
+       libsasl2-dev \
     && wget -O "/tmp/fluent-bit-${FLB_VERSION}.zip" ${FLB_TARBALL} \
     && cd /tmp && unzip "fluent-bit-$FLB_VERSION.zip" \
     && cd "fluent-bit-$FLB_VERSION"/build/ \
@@ -31,8 +32,8 @@ RUN apt-get update \
           -DFLB_JEMALLOC=On \
           -DFLB_BUFFERING=On \
           -DFLB_TLS=On \
-          -DFLB_WITHOUT_SHARED_LIB=On \
-          -DFLB_WITHOUT_EXAMPLES=On \
+          -DFLB_SHARED_LIB=Off \
+          -DFLB_EXAMPLES=Off \
           -DFLB_HTTP_SERVER=On \
           -DFLB_OUT_KAFKA=On .. \
     && make \
@@ -53,12 +54,11 @@ LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version
 
 RUN apt-get update \
     && apt-get dist-upgrade -y \
-    && apt-get install --no-install-recommends ca-certificates libssl1.0.2 -y \
+    && apt-get install --no-install-recommends ca-certificates libssl1.0.2 -y libsasl2-2 \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean
 COPY --from=builder /fluent-bit /fluent-bit
 
-#
 EXPOSE 2020
 
 # Entry point
