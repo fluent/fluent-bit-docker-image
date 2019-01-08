@@ -8,7 +8,7 @@ ENV FLB_VERSION 1.0.1
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV FLB_TARBALL https://github.com/fluent/fluent-bit/archive/master.zip
+ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip
 RUN mkdir -p /fluent-bit/bin /fluent-bit/etc /fluent-bit/log /tmp/fluent-bit-master/
 
 RUN apt-get update && \
@@ -25,12 +25,12 @@ RUN apt-get update && \
       libsystemd-dev \
       zlib1g-dev \
       ca-certificates \
-    && wget -O "/tmp/fluent-bit-master.zip" ${FLB_TARBALL} \
-    && cd /tmp && unzip "fluent-bit-master.zip" \
-    && cd "fluent-bit-master"/build/ \
-    && rm -rf /tmp/fluent-bit-master/build/*
+    && wget -O "/tmp/fluent-bit-${FLB_VERSION}.zip" ${FLB_TARBALL} \
+    && cd /tmp && unzip "fluent-bit-$FLB_VERSION.zip" \
+    && cd "fluent-bit-$FLB_VERSION"/build/ \
+    && rm -rf /tmp/fluent-bit-$FLB_VERSION/build/*
 
-WORKDIR /tmp/fluent-bit-master/build/
+WORKDIR /tmp/fluent-bit-$FLB_VERSION/build/
 RUN cmake -DFLB_DEBUG=On \
           -DFLB_TRACE=Off \
           -DFLB_JEMALLOC=On \
