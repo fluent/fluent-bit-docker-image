@@ -3,6 +3,5 @@ ADD https://busybox.net/downloads/binaries/1.30.0-i686/busybox /bin/busybox
 RUN chmod 555 /bin/busybox \
  && /bin/busybox --install
 
-FROM fluent/fluent-bit:1.0.4
+FROM fluent/fluent-bit:1.0.5
 COPY --from=builder /bin/ /bin/
-
