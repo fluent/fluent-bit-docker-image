@@ -1,6 +1,12 @@
 # Fluent Bit Docker Image
 
-[Fluent Bit](http://fluentbit.io) Docker image based on Debian base image from Google.
+[Fluent Bit](https://fluentbit.io) container images are available on Docker Hub ready for production usage. Our stable images are based in [Distroless](https://github.com/GoogleContainerTools/distroless) focusing on security containing just the Fluent Bit binary, minimal system libraries and basic configuration.
+
+Optionally, we provide debug images which contains Busybox that can be used to troubleshoot or testing purposes.
+
+For a detailed list of Tags and versions available, please refer to the the official documentation:
+
+https://docs.fluentbit.io/manual/installation/docker
 
 
 
@@ -20,7 +26,6 @@ Fluent Bit Dockerfiles are located in separated branches with proper tags:
 Use `docker build` command to build the image. This example names the image "fluent-bit:latest":
 
 ```
-$ cd 1.0/
 $ docker build -t fluent/fluent-bit:1.0 ./
 ```
 
