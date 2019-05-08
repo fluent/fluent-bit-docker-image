@@ -2,9 +2,9 @@ FROM debian:stretch as builder
 
 # Fluent Bit version
 ENV FLB_MAJOR 1
-ENV FLB_MINOR 0
-ENV FLB_PATCH 6
-ENV FLB_VERSION 1.0.6
+ENV FLB_MINOR 1
+ENV FLB_PATCH 0
+ENV FLB_VERSION 1.1.0
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -25,6 +25,8 @@ RUN apt-get update && \
       libsystemd-dev \
       zlib1g-dev \
       ca-certificates \
+      flex \
+      bison \
     && wget -O "/tmp/fluent-bit-${FLB_VERSION}.zip" ${FLB_TARBALL} \
     && cd /tmp && unzip "fluent-bit-$FLB_VERSION.zip" \
     && cd "fluent-bit-$FLB_VERSION"/build/ \
