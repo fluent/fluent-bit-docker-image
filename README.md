@@ -16,7 +16,8 @@ Fluent Bit Dockerfiles are located in separated branches with proper tags:
 
 | Branch | Tags Available                                               |
 | ------ | ------------------------------------------------------------ |
-| 1.1    | 1.1, 1.1-debug, 1.1.0, 1.1.0-debug, 1.1.1, 1.1.1-debug       |
+| 1.2    | 1.2, 1.2-debug, 1.2.0, 1.2.0-debug, 1.2.1, 1.2.1-debug |
+| 1.1    | 1.1, 1.1-debug, 1.1.0, 1.1.0-debug, 1.1.1, 1.1.1-debug, 1.1.2, 1.1.2-debug, 1.1.3, 1.1.3-debug |
 | 1.0    | 1.0, 1.0-debug, 1.0.0, 1.0.1, 1.0.2, 1.0.3, 1.0.3-debug, 1.0.4, 1.0.4-debug, 1.0.5, 1.0.5-debug, 1.0.6, 1.0.6-debug |
 | 0.14   | 0.14, 0.14.0, 0.14.1, 0.14.2, 0.14.3, 0.14.4, 0.14.5, 0.14.6, 0.14.7, 0.14.8, 0.14.9 |
 | 0.13   | 0.13, 0.13.0, 0.13.1, 0.13.2, 0.13.3, 0.13.4, 0.13.5, 0.13.6, 0.13.7, 0.13.8 |
@@ -27,7 +28,7 @@ Fluent Bit Dockerfiles are located in separated branches with proper tags:
 Use `docker build` command to build the image. This example names the image "fluent-bit:latest":
 
 ```
-$ docker build -t fluent/fluent-bit:1.0 ./
+$ docker build -t fluent/fluent-bit:1.2 ./
 ```
 
 ## 3. Test it
@@ -48,7 +49,7 @@ $ docker run --log-driver=fluentd -t ubuntu echo "Testing a log message"
 On Fluent Bit container will print to stdout something like this:
 
 ```
-Fluent Bit v1.1.x
+Fluent Bit v1.2.x
 Copyright (C) Treasure Data
 
 [0] docker.31c94ceb86ca: [1487548735, {"container_id"=>"31c94ceb86cae7055564eb4d65cd2e2897addd252fe6b86cd11bddd70a871c08", "container_name"=>"/admiring_shannon", "source"=>"stdout","}]og"=>"Testing a log message
