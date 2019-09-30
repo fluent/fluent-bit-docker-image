@@ -1,7 +1,7 @@
 FROM arm64v8/debian:buster-slim as builder
 
 # Arm64v8 qemu
-ADD qemu-aarch64-static /usr/bin
+# ADD qemu-aarch64-static /usr/bin
 
 # Fluent Bit version
 ENV FLB_MAJOR 1
@@ -62,7 +62,7 @@ COPY fluent-bit.conf \
 FROM arm64v8/debian:buster-slim
 
 # Arm64v8 qemu
-ADD qemu-aarch64-static /usr/bin
+# ADD qemu-aarch64-static /usr/bin
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
