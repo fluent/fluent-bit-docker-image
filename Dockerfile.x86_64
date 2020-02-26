@@ -1,10 +1,10 @@
-FROM amd64/debian:stretch-slim as builder
+FROM amd64/debian:buster-slim as builder
 
 # Fluent Bit version
 ENV FLB_MAJOR 1
 ENV FLB_MINOR 3
-ENV FLB_PATCH 8
-ENV FLB_VERSION 1.3.8
+ENV FLB_PATCH 9
+ENV FLB_VERSION 1.3.9
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -56,7 +56,8 @@ COPY fluent-bit.conf \
      plugins.conf \
      /fluent-bit/etc/
 
-FROM gcr.io/distroless/cc
+#FROM gcr.io/distroless/cc
+FROM gcr.io/distroless/static
 MAINTAINER Eduardo Silva <eduardo@treasure-data.com>
 LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version="1.1"
 
