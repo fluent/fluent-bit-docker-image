@@ -1,4 +1,4 @@
-FROM amd64/debian:buster-slim as builder
+FROM amd64/debian:stretch-slim as builder
 
 # Fluent Bit version
 ENV FLB_MAJOR 1

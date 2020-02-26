@@ -1,4 +1,4 @@
-FROM arm64v8/debian:buster-slim as builder
+FROM arm64v8/debian:stretch-slim as builder
 
 # Arm64v8 qemu
 # ADD qemu-aarch64-static /usr/bin
