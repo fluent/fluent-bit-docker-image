@@ -1,42 +1,40 @@
-FROM arm64v8/debian:stretch-slim as builder
-
-# Arm64v8 qemu
-# ADD qemu-aarch64-static /usr/bin
+FROM arm64v8/debian:buster-slim as builder
 
 # Fluent Bit version
 ENV FLB_MAJOR 1
-ENV FLB_MINOR 3
-ENV FLB_PATCH 9
-ENV FLB_VERSION 1.3.9
+ENV FLB_MINOR 4
+ENV FLB_PATCH 0
+ENV FLB_VERSION 1.4.0
+
+ADD source /
+ARG FLB_TARBALL=https://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.tar.gz
+ENV FLB_SOURCE $FLB_TARBALL
+RUN mkdir -p /fluent-bit/bin /fluent-bit/etc /fluent-bit/log /tmp/fluent-bit-master/
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV FLB_TARBALL http://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.zip
-RUN mkdir -p /fluent-bit/bin /fluent-bit/etc /fluent-bit/log /tmp/fluent-bit-master/
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      build-essential \
-      cmake \
-      make \
-      wget \
-      unzip \
-      libssl-dev \
-      libasl-dev \
-      libsasl2-dev \
-      pkg-config \
-      libsystemd-dev \
-      zlib1g-dev \
-      ca-certificates \
-      flex \
-      bison \
-    && rm -rf /tmp/*.zip \
-    && wget -O "/tmp/fluent-bit-${FLB_VERSION}.zip" ${FLB_TARBALL} \
-    && cd /tmp && unzip "fluent-bit-$FLB_VERSION.zip" \
-    && cd "fluent-bit-$FLB_VERSION"/build/ \
-    && rm -rf /tmp/fluent-bit-$FLB_VERSION/build/*
+    build-essential \
+    curl \
+    ca-certificates \
+    cmake \
+    make \
+    tar \
+    libssl-dev \
+    libsasl2-dev \
+    pkg-config \
+    libsystemd-dev \
+    zlib1g-dev \
+    flex \
+    bison \
+    && curl -L -o "/tmp/fluent-bit.tar.gz" ${FLB_SOURCE} \
+    && cd tmp/ && mkdir fluent-bit \
+    && tar zxfv fluent-bit.tar.gz -C ./fluent-bit --strip-components=1 \
+    && cd fluent-bit/build/ \
+    && rm -rf /tmp/fluent-bit/build/*
 
-WORKDIR /tmp/fluent-bit-$FLB_VERSION/build/
+WORKDIR /tmp/fluent-bit/build/
 RUN cmake -DFLB_DEBUG=On \
           -DFLB_TRACE=Off \
           -DFLB_JEMALLOC=On \
@@ -51,20 +49,17 @@ RUN make -j $(getconf _NPROCESSORS_ONLN)
 RUN install bin/fluent-bit /fluent-bit/bin/
 
 # Configuration files
-COPY fluent-bit.conf \
-     parsers.conf \
-     parsers_java.conf \
-     parsers_extra.conf \
-     parsers_openstack.conf \
-     parsers_cinder.conf \
-     plugins.conf \
+COPY conf/fluent-bit.conf \
+     conf/parsers.conf \
+     conf/parsers_ambassador.conf \
+     conf/parsers_java.conf \
+     conf/parsers_extra.conf \
+     conf/parsers_openstack.conf \
+     conf/parsers_cinder.conf \
+     conf/plugins.conf \
      /fluent-bit/etc/
 
 FROM arm64v8/debian:buster-slim
-
-# Arm64v8 qemu
-# ADD qemu-aarch64-static /usr/bin
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       libssl1.1 \
