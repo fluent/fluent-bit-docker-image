@@ -3,8 +3,8 @@ FROM arm64v8/debian:buster-slim as builder
 # Fluent Bit version
 ENV FLB_MAJOR 1
 ENV FLB_MINOR 4
-ENV FLB_PATCH 3
-ENV FLB_VERSION 1.4.3
+ENV FLB_PATCH 4
+ENV FLB_VERSION 1.4.4
 
 ADD source /
 ARG FLB_TARBALL=https://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.tar.gz
