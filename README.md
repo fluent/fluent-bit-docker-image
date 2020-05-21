@@ -36,7 +36,6 @@ $ docker build -t fluent/fluent-bit:1.2 ./
 Once the image is built, it's ready to run:
 
 ```
-docker run -p 127.0.0.1:24224:24224 fluent/fluent-bit:latest
 docker run -p 127.0.0.1:24224:24224 fluent/fluent-bit:latest /fluent-bit/bin/fluent-bit -i forward://0.0.0.0:24224 -o stdout
 
 ```
