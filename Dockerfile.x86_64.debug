@@ -26,6 +26,7 @@ RUN apt-get update && \
     pkg-config \
     libsystemd-dev \
     zlib1g-dev \
+    libzstd-dev \
     libpq-dev \
     postgresql-server-dev-all \
     flex \
