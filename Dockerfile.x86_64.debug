@@ -68,7 +68,7 @@ COPY --from=amd64/busybox:1.31.1 /bin/busybox /bin/busybox
 RUN chmod 555 /bin/busybox && \
     /bin/busybox --install -s /usr/local/bin
 
-FROM gcr.io/distroless/cc-debian10:fd0d99e8c54d7d7b2f3dd29f5093d030d192cbbc
+FROM gcr.io/distroless/cc-debian10
 MAINTAINER Eduardo Silva <eduardo@treasure-data.com>
 LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version="1.1"
 
