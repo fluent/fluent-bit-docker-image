@@ -2,9 +2,9 @@ FROM amd64/debian:buster-slim as builder
 
 # Fluent Bit version
 ENV FLB_MAJOR 1
-ENV FLB_MINOR 6
-ENV FLB_PATCH 10
-ENV FLB_VERSION 1.6.10
+ENV FLB_MINOR 7
+ENV FLB_PATCH 0
+ENV FLB_VERSION 1.7.0
 
 ADD source /
 ARG FLB_TARBALL=https://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.tar.gz
@@ -37,7 +37,7 @@ RUN apt-get update && \
     && rm -rf /tmp/fluent-bit/build/*
 
 WORKDIR /tmp/fluent-bit/build/
-RUN cmake -DFLB_DEBUG=On \
+RUN cmake -DFLB_RELEASE=On \
           -DFLB_TRACE=Off \
           -DFLB_JEMALLOC=On \
           -DFLB_TLS=On \
