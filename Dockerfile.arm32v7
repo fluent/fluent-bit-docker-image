@@ -31,6 +31,7 @@ RUN apt-get update && \
     flex \
     bison \
     openssl \
+    libatomic1 \
     && c_rehash \
     && curl -L -o "/tmp/fluent-bit.tar.gz" ${FLB_SOURCE} \
     && cd tmp/ && mkdir fluent-bit \
@@ -75,7 +76,8 @@ RUN apt-get update && \
       libpq5 \
       libsystemd0 \
       zlib1g \
-      ca-certificates
+      ca-certificates \
+      libatomic1
 
 COPY --from=builder /fluent-bit /fluent-bit
 
