@@ -61,8 +61,8 @@ COPY conf/fluent-bit.conf \
      conf/plugins.conf \
      /fluent-bit/etc/
 
-FROM gcr.io/distroless/cc-debian10
-MAINTAINER Eduardo Silva <eduardo@treasure-data.com>
+FROM gcr.io/distroless/cc-debian11
+LABEL org.opencontainers.image.authors="Eduardo Silva <eduardo@treasure-data.com>"
 LABEL Description="Fluent Bit docker image" Vendor="Fluent Organization" Version="1.1"
 
 # Copy certificates
