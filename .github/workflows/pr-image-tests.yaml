@@ -1,0 +1,60 @@
+name: Build and run image tests for all architectures
+on:
+  pull_request:
+    paths:
+      - dockerfiles/*
+
+jobs:
+    pr-get-latest-tag:
+      name: PR - get latest tag for source build
+      runs-on: ubuntu-latest
+      environment: pr
+      outputs:
+        latest_tag: ${{ steps.formatted_version.outputs.replaced }}
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions-ecosystem/action-get-latest-tag@v1
+          id: get-latest-tag
+          with:
+            semver_only: true
+        - uses: frabert/replace-string-action@v2.0
+          id: formatted_version
+          with:
+            pattern: '[v]*(.*)$'
+            string: ${{ steps.get-latest-tag.outputs.tag }}
+            replace-with: '$1'
+            flags: 'g'
+
+    pr-image-tests-classic-docker-build:
+      name: PR - Classic docker build test
+      needs: pr-get-latest-tag
+      runs-on: ubuntu-latest
+      environment: pr
+      strategy:
+        # A failure on one is probably shared
+        fail-fast: true
+        matrix:
+          arch: [ amd64, arm64, arm/v7 ]
+          include:
+            - arch: amd64
+              suffix: x86_64
+            - arch: arm/v7
+              suffix: arm32v7
+            - arch: arm64
+              suffix: arm64v8
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Build the ${{ matrix.suffix }} classic build test image
+        # We only want to confirm it builds with classic mode, nothing else
+        run: |
+          docker build --platform=linux/${{ matrix.arch }} --build-arg FLB_TARBALL="$FLB_TARBALL" -f ./dockerfiles/Dockerfile.${{ matrix.suffix }} ./dockerfiles/
+        env:
+          # Ensure we disable buildkit
+          DOCKER_BUILDKIT: 0
+          FLB_TARBALL: https://github.com/fluent/fluent-bit/archive/v${{ needs.pr-get-latest-tag.outputs.latest_tag }}.tar.gz
+        shell: bash
