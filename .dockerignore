@@ -1,0 +1,6 @@
+.github/
+ci/
+hooks/
+LICENSE
+Makefile
+README.md
