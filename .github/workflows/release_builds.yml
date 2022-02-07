@@ -1,0 +1,43 @@
+name: Release builds
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+-sumo-[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-sumo-[0-9]+-alpha.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-sumo-[0-9]+-beta.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-sumo-[0-9]+-rc.[0-9]+'
+
+jobs:
+  build-push-arm32v7:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push arm32v7
+        run: ./ci/build-push-arm32v7.sh
+
+  build-push-arm64v8:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push arm64v8
+        run: ./ci/build-push-arm64v8.sh
+
+  build-push-x86_64:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push x86_64
+        run: ./ci/build-push-x86_64.sh
+  
+  push-multiplatform-manifest:
+    runs-on: ubuntu-20.04
+    needs:
+      - build-push-arm32v7
+      - build-push-arm64v8
+      - build-push-x86_64
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push multiplatform manifest
+        run: ./ci/push-multiplatform-manifest.sh
+
