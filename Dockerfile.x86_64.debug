@@ -3,8 +3,8 @@ FROM amd64/debian:bullseye-slim as builder
 # Fluent Bit version
 ENV FLB_MAJOR 1
 ENV FLB_MINOR 8
-ENV FLB_PATCH 12
-ENV FLB_VERSION 1.8.12
+ENV FLB_PATCH 13
+ENV FLB_VERSION 1.8.13
 
 ARG FLB_TARBALL=https://github.com/fluent/fluent-bit/archive/v$FLB_VERSION.tar.gz
 ENV FLB_SOURCE $FLB_TARBALL
@@ -66,13 +66,13 @@ COPY conf/fluent-bit.conf \
 # hadolint ignore=DL3006
 FROM debian:bullseye-slim
 # Keep old labels for backwards compatibility with any tooling using them
-LABEL description="Fluent Bit container debug image" vendor="Fluent Organization" version="1.8.12" author="Eduardo Silva <eduardo@calyptia.com>"
+LABEL description="Fluent Bit container debug image" vendor="Fluent Organization" version="1.8.13" author="Eduardo Silva <eduardo@calyptia.com>"
 # https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL org.opencontainers.image.description="Fluent Bit container image" \
       org.opencontainers.image.title="Fluent Bit" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.vendor="Fluent Organization" \
-      org.opencontainers.image.version="1.8.12" \
+      org.opencontainers.image.version="1.8.13" \
       org.opencontainers.image.source="https://github.com/fluent/fluent-bit" \
       org.opencontainers.image.documentation="https://docs.fluentbit.io/manual/" \
       org.opencontainers.image.authors="Eduardo Silva <eduardo@calyptia.com>"
